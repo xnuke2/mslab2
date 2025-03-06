@@ -29,7 +29,8 @@ namespace mslab2
         public Form1()
         {
             InitializeComponent();
-            numericUpDown1.Maximum =Convert.ToDecimal((double)max - 0.01);
+            numericUpDown1.Maximum =Convert.ToDecimal((double)max - Math.Pow(10,-numericUpDown1.DecimalPlaces));
+            numericUpDown1.Minimum = Convert.ToDecimal((double)Math.Pow(10, -numericUpDown1.DecimalPlaces));
         }
 
 
@@ -97,6 +98,11 @@ namespace mslab2
         static double Y5(double t, double[] Y)
         {
             return V*Math.Sin(Y[0]);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
