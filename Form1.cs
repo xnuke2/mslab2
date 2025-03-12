@@ -54,7 +54,7 @@ namespace mslab2
             List<double[]> eLast;
             List<double[][]> rez =new List<double[][]>();
             List<double[]> pogs = new List<double[]>();
-            pogs.Add(new double[] { step, 10, stopwatch.ElapsedTicks });
+            pogs.Add(new double[] { step, Int32.MaxValue, stopwatch.ElapsedTicks });
             rez.Add(el.ToArray());
             do
             {
@@ -64,8 +64,10 @@ namespace mslab2
                 stopwatch.Start();
                 el = rungeKutta.Solve(max, step);
                 stopwatch.Stop();
-                
-                pog = Math.Abs((eLast[eLast.Count-1][5] - el[el.Count - 1][5]) / eLast[eLast.Count - 1][5]) * 100;
+                double dsd = eLast[eLast.Count - 1][5];
+                double dsd2 = el[el.Count - 1][5];
+                double tmp = (eLast[eLast.Count - 1][4] - el[el.Count - 1][4]);
+                pog = Math.Abs((eLast[eLast.Count-1][3] - el[el.Count - 1][3]) / eLast[eLast.Count - 1][3]) * 100;
                 pogs.Add(new double[]{step, pog ,stopwatch.ElapsedTicks});
                 rez.Add(el.ToArray());
             } while (pog > 1);
@@ -79,21 +81,29 @@ namespace mslab2
         }
         static double Y2(double t, double[] Y)
         {
-            return Y[3];
+            return Y[2];
         }
         static double Y3(double t, double[] Y)
         {
-            return l*Y[0]-l*Y[1]-m*Y[2]+m*Y[3];
+            return l*Y[0]-l*Y[1]-m*Y[2]+n*Y[3];
         }
         static double Y4(double t, double[] Y)
         {
-            double tmp = -kt * Y[3] - i1 * Y[1] - i2 * Y[2] + s * ((10000 - Y[4]) / (b - V) - Y[1]);
-            if (tmp <= 0.5)
+            double tmp = Math.Abs(Bq(t, Y));
+            if (tmp <= a)
             {
-                return tmp;
+                return Bq(t, Y);
             }
             
-            return a * Math.Sign(tmp);
+            return a * Math.Sign(Bq(t, Y));
+        }
+        static double Bq(double t, double[] Y)
+        {
+            return -kt * Y[3] - i1 * Y[1] - i2 * Y[2] + s * (O(t,Y) - Y[1]);
+        }
+        static double O(double t, double[] Y)
+        {
+            return (10000 - Y[4]) / (b - V*t);
         }
         static double Y5(double t, double[] Y)
         {

@@ -86,7 +86,7 @@ namespace mslab2
             chart2.ChartAreas.Add(new ChartArea(""));
             chart2.Legends.Add("");
             chart2.Series[0].IsXValueIndexed = true;
-            chart2.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            chart2.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
             chart2.Titles.Add("Относительная погрешность по сравнеию с преведущим щагом");
             loc_x += 305;
             Chart chart3 = new Chart();
