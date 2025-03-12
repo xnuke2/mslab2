@@ -57,11 +57,21 @@ namespace mslab2
                             chart1.Series[0].Color = Color.Brown;
                             break;
                     }
-                    
-                    for (int k = 0; k < x[i].Length; k++)
+                    if (x[i].Length > 500000)
                     {
-                        chart1.Series[0].Points.AddXY(x[i][k][0]- pg[i][0], x[i][k][j]);
+                        int step = 1;
+                        while(x[i].Length/step >500000)
+                            step++;
+                        for (int k = 0; k < x[i].Length; k+=step)
+                        {
+                            chart1.Series[0].Points.AddXY(x[i][k][0] - pg[i][0], x[i][k][j]);
+                        }
                     }
+                    else
+                        for (int k = 0; k < x[i].Length; k++)
+                        {
+                            chart1.Series[0].Points.AddXY(x[i][k][0]- pg[i][0], x[i][k][j]);
+                        }
                     Controls.Add(chart1);
                     chart1.Visible = true;
                     loc_x += 305;
