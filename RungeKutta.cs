@@ -52,27 +52,27 @@ namespace mslab2
 
             for (int i = 0; i < Y.Length; i++)
 
-                kk[i] = Y[i] + dt * k1[i] / 3.0; //k2
+                kk[i] = Y[i] + dt * k1[i] / 2.0; //k2
 
 
             // рассчитать k2
 
-            k2 = F(t + dt / 3.0, kk, Funcs);
+            k2 = F(t + dt / 2.0, kk, Funcs);
 
 
             for (int i = 0; i < Y.Length; i++)
 
-                kk[i] = Y[i] - dt * k1[i] / 3.0 + dt * k2[i]; //k3
+                kk[i] = Y[i] + dt/2.0 * k2[i]; //k3
 
 
             // рассчитать k3
 
-            k3 = F(t + 2 * dt / 3.0, kk, Funcs);
+            k3 = F(t + 2 * dt / 2.0, kk, Funcs);
 
 
             for (int i = 0; i < Y.Length; i++)
 
-                kk[i] = Y[i] + dt * k1[i] - dt * k2[i] + dt * k3[i]; //k4
+                kk[i] = Y[i] + dt; //k4
 
 
             // рассчитать k4
@@ -83,7 +83,7 @@ namespace mslab2
             // рассчитать решение на новом шаге
 
             for (int i = 0; i < Y.Length; i++)
-                Y[i] = Y[i] + dt * (k1[i] + 3 * k2[i] + 3 * k3[i] + k4[i]) / 8.0;//y[n+1]
+                Y[i] = Y[i] + dt / 6.0 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) ;//y[n+1]
 
 
             t = t + dt;
