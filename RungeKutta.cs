@@ -67,12 +67,12 @@ namespace mslab2
 
             // рассчитать k3
 
-            k3 = F(t + 2 * dt / 2.0, kk, Funcs);
+            k3 = F(t + dt / 2.0, kk, Funcs);
 
 
             for (int i = 0; i < Y.Length; i++)
 
-                kk[i] = Y[i] + dt; //k4
+                kk[i] = Y[i] + dt*k3[i]; //k4
 
 
             // рассчитать k4
